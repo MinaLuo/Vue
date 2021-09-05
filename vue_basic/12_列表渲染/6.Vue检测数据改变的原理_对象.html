@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>6.Vue检测数据改变的原理</title>
+    <!-- 引入vue -->
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+
+<body>
+    <!-- 准备好一个容器 -->
+    <div id="root">
+        <h2>学校名称：{{name}}</h2>
+        <h2>学校地址：{{address}}</h2>
+    </div>
+
+    <script type="text/javascript">
+        Vue.config.productionTip = false
+
+        //用computed实现
+        const vm = new Vue({
+            el: '#root',
+            data: {
+                name: '尚硅谷',
+                address: '北京',
+                student: {
+                    name: 'tom',
+                    age: {
+                        rAge: 40,
+                        sAge: 29,
+                    },
+                    friends: [
+                        { name: 'jerry', age: 35 }
+                    ]
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
