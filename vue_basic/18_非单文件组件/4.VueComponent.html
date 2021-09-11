@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>4.VueComponent</title>
+    <!-- 引入vue -->
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+
+<body>
+    <!-- 准备好一个容器 -->
+    <div id="root">
+        <school></school>
+    </div>
+</body>
+
+<script type="text/javascript">
+    Vue.config.productionTip = false
+
+    //定义school组件
+    const school = Vue.extend({
+        name: 'school',
+        template: `
+           <div>
+              <h2>学校名称：{{name}}</h2>
+              <h2>学校地址：{{address}}</h2> 
+           </div>
+        `,
+        data() {
+            return {
+                name: '尚硅谷',
+                address: '北京'
+            }
+        }
+    })
+
+    //创建vm
+    new Vue({
+        el: '#root',
+        //注册组件（局部）
+        components: { school }
+    })
+</script>
+
+
+</html>
