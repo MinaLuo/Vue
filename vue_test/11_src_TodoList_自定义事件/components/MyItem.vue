@@ -18,19 +18,17 @@
 export default {
   name: "MyItem",
   //声明接收todo对象
-  props: ["todo"],
+  props: ["todo", "checkTodo", "deleteTodo"],
   methods: {
     //勾选or取消勾选
     handleCheck(id) {
       //通知App组件将对应的todo对象的done值取反
-      // this.checkTodo(id);
-      this.$bus.$emit("checkTodo", id);
+      this.checkTodo(id);
     },
     //删除
     handleDelete(id) {
       if (confirm("确定删除吗？")) {
-        // this.deleteTodo(id);
-        this.$bus.$emit("deleteTodo", id);
+        this.deleteTodo(id);
       }
     },
   },
