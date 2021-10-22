@@ -8,13 +8,28 @@
       />
       <!-- 如下代码也能实现功能，但是不太推荐，因为有点违反原则，因为修改了props -->
       <!-- <input type="checkbox" v-model="todo.done" /> -->
-      <span>{{ todo.title }}</span>
+      <span v-show="!todo.isEdit">{{ todo.title }}</span>
+      <input
+        type="text"
+        v-show="todo.isEdit"
+        :value="todo.title"
+        @blur="handleBlur(todo, $event)"
+        ref="inputTitle"
+      />
     </label>
     <button class="btn btn-danger" @click="handleDelete(todo.id)">删除</button>
+    <button
+      class="btn btn-edit"
+      v-show="!todo.isEdit"
+      @click="handleEdit(todo)"
+    >
+      编辑
+    </button>
   </li>
 </template>
 
 <script>
+import pubsub from "pubsub-js";
 export default {
   name: "MyItem",
   //声明接收todo对象
@@ -29,9 +44,28 @@ export default {
     //删除
     handleDelete(id) {
       if (confirm("确定删除吗？")) {
+        //通知App组件将对应的todo对象删除
         // this.deleteTodo(id);
-        this.$bus.$emit("deleteTodo", id);
+        // this.$bus.$emit("deleteTodo", id);
+        pubsub.publish("deleteTodo", id);
       }
+    },
+    //编辑
+    handleEdit(todo) {
+      if (todo.hasOwnProperty("isEdit")) {
+        todo.isEdit = true;
+      } else {
+        this.$set(todo, "isEdit", true);
+      }
+      this.$nextTick(function () {
+        this.$refs.inputTitle.focus();
+      });
+    },
+    //失去焦点回调（真正执行修改逻辑）
+    handleBlur(todo, e) {
+      todo.isEdit = false;
+      if (!e.target.value.trim()) return alert("输入不能为空");
+      this.$bus.$emit("updataTodo", todo.id, e.target.value);
     },
   },
 };
