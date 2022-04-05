@@ -560,3 +560,61 @@ devServer:{
 		]
 	2.跳转（要写完成路径）：
 	    <router-link to="/home/news">News</router-link>
+
+   ## 4.路由的query参数
+   1.传递参数
+    <!-- 跳转路由并携带query参数，to的字符串写法 -->
+    <router-link :to="/home/message/detail?id=666&&title=你好">跳转</router-link>
+              
+    <!-- 跳转路由并携带query参数，to的对象写法 -->
+    <router-link 
+	    :to="{
+			path:'/home/message/detail',
+			query:{
+				id:m.id,
+				title:m.title
+			}
+		}">
+			跳转
+	</router-link>
+	2.接收参数：
+	 $route.query.id
+	 $route.query.title
+   ## 5.命名路由
+    1.作用：可以简化路由的跳转。
+	2.如何使用
+	    1.给路由命名
+		   { 
+				path: '/demo',
+				component: Demo,
+				children: [
+					{ 
+						path: 'test',
+						component: Test,
+						children: [
+						{
+							name: 'hello',//给路由命名
+							path: 'welcome',
+							component: Hello
+						}
+						]
+					}
+				]
+			}
+		2.简化跳转
+		    <!-- 简化前，需要写完整的路径 -->
+			<router-link to="/demo/test/welcome">跳转</router-link>
+
+			<!-- 简化后，直接通过名字跳转 -->
+			<router-link :to="{name:'hello'}">跳转</router-link>
+
+			<!-- 简化写法配合传递参数 -->
+			<router-link :to="{
+                  name:'hello',
+                  query:{
+                      id:666,
+                      title:'你好'
+                  }
+              }">
+                  跳转
+              </router-link>
