@@ -618,3 +618,68 @@ devServer:{
               }">
                   跳转
               </router-link>
+
+   ## 6.路由的params参数
+    1.配置路由，声明接收params参数
+		{ 
+			path: '/home',
+			component: Home,
+			children: [
+			{ 
+				path: 'message',
+				component: Message,
+				children: [
+				{
+					name: 'xiangqing',
+					path: 'detail/:id/:title',//使用占位符声明接收params参数
+					component: Detail
+				}
+				]
+			},
+			{ 
+				path: 'news',
+				component: News
+			}
+			]
+		}
+	
+	2.传递参数
+	    <!-- 跳转路由并携带params参数，to的字符串写法 -->
+		<router-link :to="`/home/message/detail/${m.id}/${m.title}`">{{m.title}}</router-link
+		
+		<!-- 跳转路由并携带params参数，to的对象写法 -->
+		<router-link :to="{
+			name:'xiangqing',
+			params:{
+				id:m.id,
+				title:m.title
+			}
+		}">
+			{{m.title}}
+		</router-link>
+		特别注意：路由携带params参数时，若使用to的对象写法，则不能使用path配置项，必须使用name配置！
+
+	3.接收参数
+	    $route.params.id
+		$route.params.title
+
+   ## 7.路由的props配置
+    作用：让路由组件更方便的接收参数
+	    {
+			name: 'xiangqing',
+			path: 'detail',
+			component: Detail,
+			//props的第一种写法，值为对象，该对象中的所有key-value都会以props的形式传给Detail组件
+			// props: {a:1, b:'hello'}
+
+			//props的第二种写法，值为布尔值，若布尔值为真，就会把该路由组件收到的所有params参数，以props的形式传给Detail组件。
+			// props: true
+
+			//props的第三种写法，值为函数
+			props($route){
+				return {
+				id:$route.query.id,
+				title:$route.query.title
+				}
+			}
+		}
