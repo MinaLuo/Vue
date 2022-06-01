@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let str = 'abc666defg123mnp';
+        const strReplace = str.replace(/\d/g, '');
+        console.log(strReplace,'strReplace')//abcdefgmnp
+
+        const strSearchD = str.search(/\d/);
+        console.log(strSearchD,'strSearchD')//3
+
+        //search()方法加g修饰符没用
+        const strSearchDG = str.search(/\d/g);
+        console.log(strSearchDG,'strSearchDG')//3
+
+        const strMatchD = str.match(/\d/);
+        console.log(strMatchD,'strMatchD')//['6', index: 3, input: 'abc666defg123mnp', groups: undefined] 
+
+        const strMatchDG = str.match(/\d/g);
+        console.log(strMatchDG,'strMatchDG')//['6', '6', '6', '1', '2', '3']
+
+        const strD = /^\d/.test('abc')
+        console.log(strD,'strD')//false 
+
+        const strD5 = /^\d/.test('5abc')
+        console.log(strD5,'strD5')//true 
+
+        let templateStr = '34[abc]'
+        const templateStrMatch = templateStr.match(/^\d+\[/)
+        console.log(templateStrMatch,'templateStrMatch')//['34[', index: 0, input: '34[abc]', groups: undefined]
+
+        const templateStrMatchBracket = templateStr.match(/^(\d+)\[/)
+        console.log(templateStrMatchBracket,'templateStrMatchBracket')// ['34[', '34', index: 0, input: '34[abc]', groups: undefined]
+    </script>
+</body>
+</html>
